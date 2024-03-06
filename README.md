@@ -2,6 +2,9 @@
 
 SimpleTerrain is a Godot 4 addon which provides a SimpleTerrain node as well as editor features to modify the terrain.
 
+I did a YouTube explaining the functionality and structure of this extension here:
+https://www.youtube.com/watch?v=AK951MB9kXM
+
 ## Features
 
 - Editor plugin for easy integration
