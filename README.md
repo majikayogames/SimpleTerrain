@@ -14,7 +14,7 @@ SimpleTerrain is a Godot 4 addon which provides a SimpleTerrain node as well as 
 
 ## Installation
 
-1. Clone this repo or download as as zip by clicking the `Code` button above.
+1. Clone this repo or download as a zip by clicking the `Code` button above.
 2. Copy the contents of the `addons` folder to your project's `addons` directory.
 3. Enable in Godot under `Project Settings > Plugins`.
 
