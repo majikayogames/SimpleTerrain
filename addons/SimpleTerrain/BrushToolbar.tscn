@@ -1,0 +1,519 @@
+[gd_scene load_steps=13 format=3 uid="uid://dhg07358xefq0"]
+
+[ext_resource type="Script" path="res://addons/SimpleTerrain/BrushToolbar.gd" id="1_sf5jv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxm1g"]
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_r08lb"]
+TextureRect/styles/asd = SubResource("StyleBoxFlat_nxm1g")
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_praku"]
+allow_unpress = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_di5xf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[sub_resource type="Theme" id="Theme_vs762"]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_di5xf")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c8tmb"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_rvyhp"]
+/styles/Border = SubResource("StyleBoxFlat_c8tmb")
+
+[sub_resource type="Gradient" id="Gradient_vw1bq"]
+interpolation_mode = 2
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0, 0.029997, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_csyql"]
+gradient = SubResource("Gradient_vw1bq")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qhlar"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_utdcu"]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_qhlar")
+
+[node name="BrushToolbar" type="MarginContainer"]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_r08lb")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_sf5jv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="BrushButtons" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_constants/margin_right = 10
+
+[node name="BrushButtons" type="HBoxContainer" parent="HBoxContainer/BrushButtons"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/BrushButtons/BrushButtons"]
+layout_mode = 2
+text = "Terrain brush:"
+
+[node name="Raise" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "Raise"
+
+[node name="Lower" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "Lower"
+
+[node name="Flatten" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "Flatten"
+
+[node name="Splat_0" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "0"
+
+[node name="Splat_1" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "1"
+
+[node name="Splat_2" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "2"
+
+[node name="Splat_3" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "3"
+
+[node name="Splat_Transparent" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "Hole"
+
+[node name="BrushPreview" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 7
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/BrushPreview"]
+layout_mode = 2
+theme = SubResource("Theme_vs762")
+
+[node name="BrushPreviewTextureRect" type="TextureRect" parent="HBoxContainer/BrushPreview/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_rvyhp")
+texture = SubResource("GradientTexture2D_csyql")
+expand_mode = 3
+
+[node name="BrushSize" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/BrushSize"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/BrushSize/HBoxContainer"]
+layout_mode = 2
+text = "Size:"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/BrushSize/HBoxContainer"]
+layout_mode = 2
+max_value = 512.0
+value = 64.0
+allow_greater = true
+suffix = "px"
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/BrushSize/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 512.0
+value = 64.0
+allow_greater = true
+
+[node name="Hardness" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Hardness"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/Hardness/HBoxContainer"]
+layout_mode = 2
+text = "Hardness:"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/Hardness/HBoxContainer"]
+layout_mode = 2
+step = 0.05
+value = 75.0
+suffix = "%"
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/Hardness/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 75.0
+
+[node name="Opacity" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Opacity"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/Opacity/HBoxContainer"]
+layout_mode = 2
+text = "Opacity:"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/Opacity/HBoxContainer"]
+layout_mode = 2
+step = 0.05
+value = 100.0
+suffix = "%"
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/Opacity/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 1.0
+value = 100.0
+
+[node name="TerrainSettings" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HBoxContainer/TerrainSettings"]
+layout_mode = 2
+text = "Terrain settings"
+
+[node name="SettingsPopup" type="PopupPanel" parent="."]
+unique_name_in_owner = true
+title = "Terrain texture settings"
+initial_position = 2
+size = Vector2i(640, 575)
+unresizable = false
+borderless = false
+keep_title_visible = true
+
+[node name="PopupMargin" type="MarginContainer" parent="SettingsPopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 636.0
+offset_bottom = 592.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="PopupVBox" type="VBoxContainer" parent="SettingsPopup/PopupMargin"]
+layout_mode = 2
+
+[node name="HeightmapTitle" type="MarginContainer" parent="SettingsPopup/PopupMargin/PopupVBox"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapTitle"]
+layout_mode = 2
+text = "Height map settings:"
+
+[node name="HeightmapOptions" type="GridContainer" parent="SettingsPopup/PopupMargin/PopupVBox"]
+layout_mode = 2
+columns = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/MarginContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = SubResource("Theme_utdcu")
+
+[node name="HeightmapTextureRect" type="TextureRect" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/MarginContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 4
+stretch_mode = 5
+
+[node name="HeightmapNoImageLabel" type="CenterContainer" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/MarginContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/MarginContainer/PanelContainer/HeightmapNoImageLabel"]
+layout_mode = 2
+text = "No image"
+horizontal_alignment = 1
+
+[node name="FlowContainer4" type="FlowContainer" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="GridContainer" type="GridContainer" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer4"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer4/GridContainer"]
+layout_mode = 2
+text = "Width:"
+
+[node name="HeightmapWidth" type="SpinBox" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer4/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+min_value = 1.0
+max_value = 8192.0
+value = 1024.0
+rounded = true
+suffix = "px"
+
+[node name="Label2" type="Label" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer4/GridContainer"]
+layout_mode = 2
+text = "Height:"
+
+[node name="HeightmapHeight" type="SpinBox" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer4/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+min_value = 1.0
+max_value = 8192.0
+value = 1024.0
+rounded = true
+suffix = "px"
+
+[node name="FlowContainer6" type="FlowContainer" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
+
+[node name="ConvertToImageTextureHeightmap" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer6"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Convert to ImageTexture"
+
+[node name="NewImage" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer6"]
+layout_mode = 2
+text = "Create new"
+
+[node name="ResizeImage" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer6"]
+layout_mode = 2
+text = "Resize"
+
+[node name="SplatmapTitle" type="MarginContainer" parent="SettingsPopup/PopupMargin/PopupVBox"]
+layout_mode = 2
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapTitle"]
+layout_mode = 2
+text = "Splat map settings:"
+
+[node name="SplatmapOptions" type="GridContainer" parent="SettingsPopup/PopupMargin/PopupVBox"]
+layout_mode = 2
+columns = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="PanelContainer2" type="PanelContainer" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/MarginContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = SubResource("Theme_utdcu")
+
+[node name="SplatmapTextureRect" type="TextureRect" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/MarginContainer/PanelContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 2
+stretch_mode = 5
+
+[node name="SplatmapNoImageLabel" type="CenterContainer" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/MarginContainer/PanelContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/MarginContainer/PanelContainer2/SplatmapNoImageLabel"]
+layout_mode = 2
+text = "No image"
+horizontal_alignment = 1
+
+[node name="FlowContainer4" type="FlowContainer" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="GridContainer" type="GridContainer" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer4"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer4/GridContainer"]
+layout_mode = 2
+text = "Width:"
+
+[node name="SplatmapWidth" type="SpinBox" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer4/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+min_value = 1.0
+max_value = 8192.0
+value = 1024.0
+rounded = true
+suffix = "px"
+
+[node name="Label2" type="Label" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer4/GridContainer"]
+layout_mode = 2
+text = "Height:"
+
+[node name="SplatmapHeight" type="SpinBox" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer4/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+min_value = 1.0
+max_value = 8192.0
+value = 1024.0
+rounded = true
+suffix = "px"
+
+[node name="FlowContainer5" type="FlowContainer" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
+
+[node name="ConvertToImageTextureSplatmap" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer5"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Convert to ImageTexture"
+
+[node name="NewImage" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer5"]
+layout_mode = 2
+text = "Create new"
+
+[node name="ResizeImage" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer5"]
+layout_mode = 2
+text = "Resize"
+
+[node name="BakeButtons" type="VBoxContainer" parent="SettingsPopup/PopupMargin/PopupVBox"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="SettingsPopup/PopupMargin/PopupVBox/BakeButtons"]
+layout_mode = 2
+theme_override_constants/margin_top = 25
+
+[node name="FlowContainer6" type="FlowContainer" parent="SettingsPopup/PopupMargin/PopupVBox/BakeButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
+
+[node name="BakeNormalMapButton" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6"]
+layout_mode = 2
+text = "Bake normal map"
+
+[node name="CreateCollisionBodyButton" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6"]
+layout_mode = 2
+text = "Create collision body"
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPopup/PopupMargin/PopupVBox/BakeButtons"]
+layout_mode = 2
+theme_override_constants/margin_top = 15
+
+[node name="Label" type="Label" parent="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "Precomputing the normal map or collison body may improve load time or reduce initial stuttering but takes up more space on disk. The collision body is more expensive to compute."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ConvertTextureConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+initial_position = 2
+size = Vector2i(350, 135)
+ok_button_text = "Convert texture"
+
+[connection signal="value_changed" from="HBoxContainer/BrushSize/HBoxContainer/SpinBox" to="." method="set_brush_size_from_ui"]
+[connection signal="value_changed" from="HBoxContainer/BrushSize/HBoxContainer/SpinBox" to="HBoxContainer/BrushSize/HBoxContainer/HSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="HBoxContainer/BrushSize/HBoxContainer/HSlider" to="HBoxContainer/BrushSize/HBoxContainer/SpinBox" method="set_value"]
+[connection signal="value_changed" from="HBoxContainer/Hardness/HBoxContainer/SpinBox" to="." method="set_brush_hardness_from_ui"]
+[connection signal="value_changed" from="HBoxContainer/Hardness/HBoxContainer/SpinBox" to="HBoxContainer/Hardness/HBoxContainer/HSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="HBoxContainer/Hardness/HBoxContainer/HSlider" to="HBoxContainer/Hardness/HBoxContainer/SpinBox" method="set_value"]
+[connection signal="value_changed" from="HBoxContainer/Opacity/HBoxContainer/SpinBox" to="." method="set_brush_opacity_from_ui"]
+[connection signal="value_changed" from="HBoxContainer/Opacity/HBoxContainer/SpinBox" to="HBoxContainer/Opacity/HBoxContainer/HSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="HBoxContainer/Opacity/HBoxContainer/HSlider" to="HBoxContainer/Opacity/HBoxContainer/SpinBox" method="set_value"]
+[connection signal="pressed" from="HBoxContainer/TerrainSettings/Button" to="SettingsPopup" method="show"]
+[connection signal="visibility_changed" from="SettingsPopup" to="." method="_on_settings_popup_visibility_changed"]
+[connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer6/ConvertToImageTextureHeightmap" to="." method="_on_convert_to_image_texture_pressed" binds= [true]]
+[connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer6/NewImage" to="." method="_on_new_image_pressed" binds= [true]]
+[connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer6/ResizeImage" to="." method="_on_resize_image_pressed" binds= [true]]
+[connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer5/ConvertToImageTextureSplatmap" to="." method="_on_convert_to_image_texture_pressed" binds= [false]]
+[connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer5/NewImage" to="." method="_on_new_image_pressed" binds= [false]]
+[connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer5/ResizeImage" to="." method="_on_resize_image_pressed" binds= [false]]
+[connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6/BakeNormalMapButton" to="." method="_on_bake_normal_map_button_pressed"]
+[connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6/CreateCollisionBodyButton" to="." method="_on_create_collision_body_button_pressed"]
+[connection signal="confirmed" from="ConvertTextureConfirmationDialog" to="." method="_on_convert_texture_confirmation_dialog_confirmed"]

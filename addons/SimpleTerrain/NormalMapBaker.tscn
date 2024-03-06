@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcr561ad4u2fe"]
+
+[ext_resource type="Script" path="res://addons/SimpleTerrain/NormalMapBaker.gd" id="1_hc6wb"]
+[ext_resource type="Shader" path="res://addons/SimpleTerrain/Shaders/NormalMapShader.gdshader" id="1_prgwr"]
+
+[sub_resource type="World3D" id="World3D_d3tlc"]
+resource_local_to_scene = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6skty"]
+resource_local_to_scene = true
+shader = ExtResource("1_prgwr")
+shader_parameter/height_scale = null
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_vmti5"]
+resource_local_to_scene = true
+
+[node name="NormalMapBaker" type="Node"]
+script = ExtResource("1_hc6wb")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+world_3d = SubResource("World3D_d3tlc")
+render_target_update_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport"]
+material = SubResource("ShaderMaterial_6skty")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_vmti5")
