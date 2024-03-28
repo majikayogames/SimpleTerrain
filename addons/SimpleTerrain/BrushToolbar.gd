@@ -130,7 +130,7 @@ func _on_new_image_pressed(heightmap : bool):
 	undo_redo.create_action("Create new terrain image")
 	if heightmap:
 		var img = Image.create(%HeightmapWidth.value, %HeightmapHeight.value, false, UTILS.HEIGHTMAP_FORMAT)
-		img.fill(Color.RED)
+		img.fill(Color.BLACK)
 		new_tex.set_image(img)
 		undo_redo.add_undo_property(terrain, "heightmap_texture", terrain.heightmap_texture)
 		undo_redo.add_do_property(terrain, "heightmap_texture", new_tex)
