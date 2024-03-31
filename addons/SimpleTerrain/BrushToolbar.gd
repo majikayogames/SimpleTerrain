@@ -194,3 +194,57 @@ func _on_bake_normal_map_button_pressed():
 
 func _on_convert_texture_confirmation_dialog_confirmed():
 	_on_convert_to_image_texture_pressed(%ConvertTextureConfirmationDialog.dialog_text.begins_with("Heightmap"))
+
+func _on_save_as_mesh_file_dialog_file_selected(path):
+	var t = get_simple_terrain_selected()
+
+	var num_verts_width = int(t._get_num_verts_along_edge_total(t.highest_lod_resolution).x)
+	var num_verts_height = int(t._get_num_verts_along_edge_total(t.highest_lod_resolution).y)
+	var scale_xz = t.terrain_xz_scale / (t._get_num_verts_along_chunk_edge(t.highest_lod_resolution) - 1)
+	# Why don't I have to pass scale_xz??
+	# Ohh it's because in create_collision_shape I do:
+	#  collision_shape.scale = Vector3(scale_xz, scale_xz, scale_xz)
+	# Basically a workaround for collision shapes not being able to scale non uniform.
+	# So I was scaling and unscaling to get the verts right. If I just pass 1 it scales it by the normal height
+	# This is fine since meshes can be scaled manually. HeightmapShape can't even control spacing of tiles.
+	var vertex_y_positions: PackedFloat32Array = t.get_collision_shape_data(Vector2(num_verts_width, num_verts_height), 1)#scale_xz)
+
+	# Initialize SurfaceTool
+	var st = SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+	# Create vertices and add them to SurfaceTool
+	var idx = 0
+	var hole_indices = []
+	var hole_at = func(i): return hole_indices.find(i) != -1
+	for z in range(0, num_verts_height):
+		for x in range(0, num_verts_width):
+			var y = vertex_y_positions[x + z * num_verts_width] # Get the height from the heightmap
+			if is_nan(y): hole_indices.push_back(idx)
+			st.set_uv(Vector2(float(x)/float(num_verts_width-1),float(z)/float(num_verts_height-1)))
+			st.add_vertex(Vector3(x * scale_xz, y if not is_nan(y) else 0.0, z * scale_xz))
+			idx += 1
+
+	# Create the indices for the mesh
+	for z in range(0, num_verts_height - 1):
+		for x in range(0, num_verts_width - 1):
+			var start = x + z * num_verts_width
+			# Match heightmap collision shape which skips triangles where any verts are NAN. Triangle 1:
+			if not (hole_at.call(start) or hole_at.call(start + 1) or hole_at.call(start + num_verts_width)):
+				st.add_index(start + 1)
+				st.add_index(start + num_verts_width)
+				st.add_index(start)
+			# Triangle 2:
+			if not (hole_at.call(start + 1) or hole_at.call(start + num_verts_width) or hole_at.call(start + num_verts_width + 1)):
+				st.add_index(start + num_verts_width + 1)
+				st.add_index(start + num_verts_width)
+				st.add_index(start + 1)
+
+	# Generate normals and tangents
+	st.generate_normals()
+	st.generate_tangents()
+
+	# Commit the surface tool to an ArrayMesh
+	var arr_mesh = st.commit()
+	# Save the mesh
+	ResourceSaver.save(arr_mesh, path)

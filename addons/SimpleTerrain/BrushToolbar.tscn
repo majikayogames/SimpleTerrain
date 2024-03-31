@@ -36,7 +36,7 @@ border_color = Color(0, 0, 0, 1)
 [sub_resource type="Gradient" id="Gradient_vw1bq"]
 interpolation_mode = 2
 interpolation_color_space = 1
-offsets = PackedFloat32Array(0, 0.029997, 1)
+offsets = PackedFloat32Array(0, 0.749925, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_csyql"]
@@ -472,6 +472,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 alignment = 1
 
+[node name="SaveAsMesh" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6"]
+layout_mode = 2
+text = "Save as untextured mesh"
+
+[node name="SaveAsMeshFileDialog" type="FileDialog" parent="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6/SaveAsMesh"]
+unique_name_in_owner = true
+initial_position = 2
+filters = PackedStringArray("*.mesh")
+
 [node name="BakeNormalMapButton" type="Button" parent="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6"]
 layout_mode = 2
 text = "Bake normal map"
@@ -514,6 +523,8 @@ ok_button_text = "Convert texture"
 [connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer5/ConvertToImageTextureSplatmap" to="." method="_on_convert_to_image_texture_pressed" binds= [false]]
 [connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer5/NewImage" to="." method="_on_new_image_pressed" binds= [false]]
 [connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/SplatmapOptions/FlowContainer5/ResizeImage" to="." method="_on_resize_image_pressed" binds= [false]]
+[connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6/SaveAsMesh" to="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6/SaveAsMesh/SaveAsMeshFileDialog" method="show"]
+[connection signal="file_selected" from="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6/SaveAsMesh/SaveAsMeshFileDialog" to="." method="_on_save_as_mesh_file_dialog_file_selected"]
 [connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6/BakeNormalMapButton" to="." method="_on_bake_normal_map_button_pressed"]
 [connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/BakeButtons/FlowContainer6/CreateCollisionBodyButton" to="." method="_on_create_collision_body_button_pressed"]
 [connection signal="confirmed" from="ConvertTextureConfirmationDialog" to="." method="_on_convert_texture_confirmation_dialog_confirmed"]
