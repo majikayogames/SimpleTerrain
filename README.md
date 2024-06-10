@@ -28,3 +28,10 @@ After installation, add a SimpleTerrain node to your scene. You can set the heig
 ## License
 
 This addon is available under the CC0 license.
+
+## Support
+
+If you find this addon helpful and would like to support its development, consider becoming a patron or buying me a coffee!
+
+[![Patreon](https://img.shields.io/badge/Patreon-Support%20Me-orange)](https://www.patreon.com/MajikayoGames)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20Me%20a%20Coffee-blue)](https://ko-fi.com/majikayogames)
