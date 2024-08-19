@@ -454,7 +454,10 @@ func _update_meshes():
 	_update_lods()
 	# Create a collision shape at runtime if there isn't already one
 	if not Engine.is_editor_hint() and get_node_or_null("StaticBody3D") == null and use_collision:
-		create_collision_shape()
+		if heightmap_texture is NoiseTexture2D:
+			create_collision_shape.call_deferred()
+		else:
+			create_collision_shape()
 
 ######################
 ## Built in methods ##
