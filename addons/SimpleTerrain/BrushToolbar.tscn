@@ -90,6 +90,7 @@ text = "Terrain brush:"
 [node name="Raise" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Raise terrain"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "Raise"
@@ -97,6 +98,7 @@ text = "Raise"
 [node name="Lower" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Lower terrain"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "Lower"
@@ -104,6 +106,7 @@ text = "Lower"
 [node name="Flatten" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Flatten terrain using elevation under the brush as the base"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "Flatten"
@@ -111,6 +114,7 @@ text = "Flatten"
 [node name="Splat_0" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Paint texture 0"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "0"
@@ -118,6 +122,7 @@ text = "0"
 [node name="Splat_1" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Paint texture 1"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "1"
@@ -125,6 +130,7 @@ text = "1"
 [node name="Splat_2" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Paint texture 2"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "2"
@@ -132,6 +138,7 @@ text = "2"
 [node name="Splat_3" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Paint texture 3"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "3"
@@ -139,6 +146,7 @@ text = "3"
 [node name="Splat_Transparent" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Paint holes in terrain"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "Hole"
@@ -149,6 +157,7 @@ theme_override_constants/margin_right = 7
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/BrushPreview"]
 layout_mode = 2
+tooltip_text = "Preview hardness and opacity"
 theme = SubResource("Theme_vs762")
 
 [node name="BrushPreviewTextureRect" type="TextureRect" parent="HBoxContainer/BrushPreview/PanelContainer"]
@@ -189,6 +198,7 @@ allow_greater = true
 [node name="Hardness" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Hardness of the brush edge"
 theme_override_constants/margin_right = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Hardness"]
@@ -213,6 +223,7 @@ value = 75.0
 [node name="Opacity" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Opacity or stength of the brush"
 theme_override_constants/margin_right = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Opacity"]
