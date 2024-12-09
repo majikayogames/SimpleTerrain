@@ -51,7 +51,11 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 	set(value): heightmap_texture = value; _update_meshes()
 @export var splatmap_texture : Texture2D :
 	set(value): splatmap_texture = value; _update_meshes()
+## Normalmap Texture. Can be baked in. Not sure if worth it to do ever. Otherwise just generates once at runtime via a shader.
+@export var normalmap_texture : Texture2D :
+	set(value): normalmap_texture = value; _update_meshes()
 
+@export_subgroup("Texture 0")
 @export var texture_0_albedo : Texture2D :
 	set(value): texture_0_albedo = value; _update_meshes()
 @export var texture_0_normal : Texture2D :
@@ -61,6 +65,7 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 @export var enable_triplanar_on_texture_0 : bool = true :
 	set(value): enable_triplanar_on_texture_0 = value; _update_meshes()
 
+@export_subgroup("Texture 1")
 @export var texture_1_albedo : Texture2D :
 	set(value): texture_1_albedo = value; _update_meshes()
 @export var texture_1_normal : Texture2D :
@@ -70,6 +75,7 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 @export var enable_triplanar_on_texture_1 : bool = false :
 	set(value): enable_triplanar_on_texture_1 = value; _update_meshes()
 
+@export_subgroup("Texture 2")
 @export var texture_2_albedo : Texture2D :
 	set(value): texture_2_albedo = value; _update_meshes()
 @export var texture_2_normal : Texture2D :
@@ -79,6 +85,7 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 @export var enable_triplanar_on_texture_2 : bool = false :
 	set(value): enable_triplanar_on_texture_2 = value; _update_meshes()
 
+@export_subgroup("Texture 3")
 @export var texture_3_albedo : Texture2D :
 	set(value): texture_3_albedo = value; _update_meshes()
 @export var texture_3_normal : Texture2D :
@@ -88,9 +95,6 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 @export var enable_triplanar_on_texture_3 : bool = false :
 	set(value): enable_triplanar_on_texture_3 = value; _update_meshes()
 
-## Normalmap Texture. Can be baked in. Not sure if worth it to do ever. Otherwise just generates once at runtime via a shader.
-@export var normalmap_texture : Texture2D :
-	set(value): normalmap_texture = value; _update_meshes()
 
 #######################
 ##     Resources     ##
