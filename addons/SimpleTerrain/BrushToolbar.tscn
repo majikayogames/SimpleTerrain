@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://dhg07358xefq0"]
 
-[ext_resource type="Script" path="res://addons/SimpleTerrain/BrushToolbar.gd" id="1_sf5jv"]
+[ext_resource type="Script" uid="uid://btxuhbljroi7x" path="res://addons/SimpleTerrain/BrushToolbar.gd" id="1_sf5jv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxm1g"]
 border_color = Color(0, 0, 0, 1)
@@ -72,22 +72,25 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_sf5jv")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HFlowContainer" type="HFlowContainer" parent="."]
 layout_mode = 2
 
-[node name="BrushButtons" type="MarginContainer" parent="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HFlowContainer"]
+layout_mode = 2
+
+[node name="BrushButtons" type="MarginContainer" parent="HFlowContainer/HBoxContainer"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 theme_override_constants/margin_right = 10
 
-[node name="BrushButtons" type="HBoxContainer" parent="HBoxContainer/BrushButtons"]
+[node name="BrushButtons" type="HBoxContainer" parent="HFlowContainer/HBoxContainer/BrushButtons"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/BrushButtons/BrushButtons"]
+[node name="Label" type="Label" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 layout_mode = 2
 text = "Terrain brush:"
 
-[node name="Raise" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+[node name="Raise" type="Button" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Raise terrain"
@@ -95,7 +98,7 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "Raise"
 
-[node name="Lower" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+[node name="Lower" type="Button" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Lower terrain"
@@ -103,7 +106,7 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "Lower"
 
-[node name="Flatten" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+[node name="Flatten" type="Button" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Flatten terrain using elevation under the brush as the base"
@@ -111,82 +114,92 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "Flatten"
 
-[node name="Splat_0" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+[node name="Splat_0" type="Button" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 tooltip_text = "Paint texture 0"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "0"
 
-[node name="Splat_1" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+[node name="Splat_1" type="Button" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 tooltip_text = "Paint texture 1"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "1"
 
-[node name="Splat_2" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+[node name="Splat_2" type="Button" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 tooltip_text = "Paint texture 2"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "2"
 
-[node name="Splat_3" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+[node name="Splat_3" type="Button" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 tooltip_text = "Paint texture 3"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "3"
 
-[node name="Splat_Transparent" type="Button" parent="HBoxContainer/BrushButtons/BrushButtons"]
+[node name="Splat_Transparent" type="Button" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 tooltip_text = "Paint holes in terrain"
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "Hole"
 
-[node name="BrushPreview" type="MarginContainer" parent="HBoxContainer"]
+[node name="BrushPreview" type="MarginContainer" parent="HFlowContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_right = 7
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/BrushPreview"]
+[node name="PanelContainer" type="PanelContainer" parent="HFlowContainer/HBoxContainer/BrushPreview"]
 layout_mode = 2
 tooltip_text = "Preview hardness and opacity"
 theme = SubResource("Theme_vs762")
 
-[node name="BrushPreviewTextureRect" type="TextureRect" parent="HBoxContainer/BrushPreview/PanelContainer"]
+[node name="BrushPreviewTextureRect" type="TextureRect" parent="HFlowContainer/HBoxContainer/BrushPreview/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_rvyhp")
 texture = SubResource("GradientTexture2D_csyql")
 expand_mode = 3
 
-[node name="BrushSize" type="MarginContainer" parent="HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BrushSize" type="MarginContainer" parent="HFlowContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_right = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/BrushSize"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HFlowContainer/HBoxContainer2/BrushSize"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/BrushSize/HBoxContainer"]
+[node name="Label" type="Label" parent="HFlowContainer/HBoxContainer2/BrushSize/HBoxContainer"]
 layout_mode = 2
 text = "Size:"
 
-[node name="SpinBox" type="SpinBox" parent="HBoxContainer/BrushSize/HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="HFlowContainer/HBoxContainer2/BrushSize/HBoxContainer"]
 layout_mode = 2
 max_value = 512.0
 value = 64.0
 allow_greater = true
 suffix = "px"
 
-[node name="HSlider" type="HSlider" parent="HBoxContainer/BrushSize/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="HFlowContainer/HBoxContainer2/BrushSize/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -195,62 +208,64 @@ max_value = 512.0
 value = 64.0
 allow_greater = true
 
-[node name="Hardness" type="MarginContainer" parent="HBoxContainer"]
+[node name="Hardness" type="MarginContainer" parent="HFlowContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Hardness of the brush edge"
 theme_override_constants/margin_right = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Hardness"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HFlowContainer/HBoxContainer2/Hardness"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/Hardness/HBoxContainer"]
+[node name="Label" type="Label" parent="HFlowContainer/HBoxContainer2/Hardness/HBoxContainer"]
 layout_mode = 2
 text = "Hardness:"
 
-[node name="SpinBox" type="SpinBox" parent="HBoxContainer/Hardness/HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="HFlowContainer/HBoxContainer2/Hardness/HBoxContainer"]
 layout_mode = 2
 step = 0.05
 value = 75.0
 suffix = "%"
 
-[node name="HSlider" type="HSlider" parent="HBoxContainer/Hardness/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="HFlowContainer/HBoxContainer2/Hardness/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 value = 75.0
 
-[node name="Opacity" type="MarginContainer" parent="HBoxContainer"]
+[node name="Opacity" type="MarginContainer" parent="HFlowContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Opacity or stength of the brush"
 theme_override_constants/margin_right = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Opacity"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HFlowContainer/HBoxContainer2/Opacity"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/Opacity/HBoxContainer"]
+[node name="Label" type="Label" parent="HFlowContainer/HBoxContainer2/Opacity/HBoxContainer"]
 layout_mode = 2
 text = "Opacity:"
 
-[node name="SpinBox" type="SpinBox" parent="HBoxContainer/Opacity/HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="HFlowContainer/HBoxContainer2/Opacity/HBoxContainer"]
 layout_mode = 2
 step = 0.05
 value = 100.0
 suffix = "%"
 
-[node name="HSlider" type="HSlider" parent="HBoxContainer/Opacity/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="HFlowContainer/HBoxContainer2/Opacity/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 1.0
 value = 100.0
 
-[node name="TerrainSettings" type="MarginContainer" parent="HBoxContainer"]
+[node name="TerrainSettings" type="MarginContainer" parent="HFlowContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="HBoxContainer/TerrainSettings"]
+[node name="Button" type="Button" parent="HFlowContainer/HBoxContainer2/TerrainSettings"]
 layout_mode = 2
 text = "Terrain settings"
 
@@ -517,16 +532,16 @@ initial_position = 2
 size = Vector2i(350, 135)
 ok_button_text = "Convert texture"
 
-[connection signal="value_changed" from="HBoxContainer/BrushSize/HBoxContainer/SpinBox" to="." method="set_brush_size_from_ui"]
-[connection signal="value_changed" from="HBoxContainer/BrushSize/HBoxContainer/SpinBox" to="HBoxContainer/BrushSize/HBoxContainer/HSlider" method="set_value_no_signal"]
-[connection signal="value_changed" from="HBoxContainer/BrushSize/HBoxContainer/HSlider" to="HBoxContainer/BrushSize/HBoxContainer/SpinBox" method="set_value"]
-[connection signal="value_changed" from="HBoxContainer/Hardness/HBoxContainer/SpinBox" to="." method="set_brush_hardness_from_ui"]
-[connection signal="value_changed" from="HBoxContainer/Hardness/HBoxContainer/SpinBox" to="HBoxContainer/Hardness/HBoxContainer/HSlider" method="set_value_no_signal"]
-[connection signal="value_changed" from="HBoxContainer/Hardness/HBoxContainer/HSlider" to="HBoxContainer/Hardness/HBoxContainer/SpinBox" method="set_value"]
-[connection signal="value_changed" from="HBoxContainer/Opacity/HBoxContainer/SpinBox" to="." method="set_brush_opacity_from_ui"]
-[connection signal="value_changed" from="HBoxContainer/Opacity/HBoxContainer/SpinBox" to="HBoxContainer/Opacity/HBoxContainer/HSlider" method="set_value_no_signal"]
-[connection signal="value_changed" from="HBoxContainer/Opacity/HBoxContainer/HSlider" to="HBoxContainer/Opacity/HBoxContainer/SpinBox" method="set_value"]
-[connection signal="pressed" from="HBoxContainer/TerrainSettings/Button" to="SettingsPopup" method="show"]
+[connection signal="value_changed" from="HFlowContainer/HBoxContainer2/BrushSize/HBoxContainer/SpinBox" to="." method="set_brush_size_from_ui"]
+[connection signal="value_changed" from="HFlowContainer/HBoxContainer2/BrushSize/HBoxContainer/SpinBox" to="HFlowContainer/HBoxContainer2/BrushSize/HBoxContainer/HSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="HFlowContainer/HBoxContainer2/BrushSize/HBoxContainer/HSlider" to="HFlowContainer/HBoxContainer2/BrushSize/HBoxContainer/SpinBox" method="set_value"]
+[connection signal="value_changed" from="HFlowContainer/HBoxContainer2/Hardness/HBoxContainer/SpinBox" to="." method="set_brush_hardness_from_ui"]
+[connection signal="value_changed" from="HFlowContainer/HBoxContainer2/Hardness/HBoxContainer/SpinBox" to="HFlowContainer/HBoxContainer2/Hardness/HBoxContainer/HSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="HFlowContainer/HBoxContainer2/Hardness/HBoxContainer/HSlider" to="HFlowContainer/HBoxContainer2/Hardness/HBoxContainer/SpinBox" method="set_value"]
+[connection signal="value_changed" from="HFlowContainer/HBoxContainer2/Opacity/HBoxContainer/SpinBox" to="." method="set_brush_opacity_from_ui"]
+[connection signal="value_changed" from="HFlowContainer/HBoxContainer2/Opacity/HBoxContainer/SpinBox" to="HFlowContainer/HBoxContainer2/Opacity/HBoxContainer/HSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="HFlowContainer/HBoxContainer2/Opacity/HBoxContainer/HSlider" to="HFlowContainer/HBoxContainer2/Opacity/HBoxContainer/SpinBox" method="set_value"]
+[connection signal="pressed" from="HFlowContainer/HBoxContainer2/TerrainSettings/Button" to="SettingsPopup" method="show"]
 [connection signal="visibility_changed" from="SettingsPopup" to="." method="_on_settings_popup_visibility_changed"]
 [connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer6/ConvertToImageTextureHeightmap" to="." method="_on_convert_to_image_texture_pressed" binds= [true]]
 [connection signal="pressed" from="SettingsPopup/PopupMargin/PopupVBox/HeightmapOptions/FlowContainer6/NewImage" to="." method="_on_new_image_pressed" binds= [true]]
