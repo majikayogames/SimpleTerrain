@@ -45,6 +45,10 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 ## Added this because normal map doesn't update when changing NoiseTexture2D parameters.
 @export var update_normal_map_every_frame_in_editor := true
 
+## Debug toggle for debug mesh view. If on, always default to use editor viewport cam.
+## Otherwise, will try to use Camera3D node if found in scene.
+@export var always_use_editor_cam := true
+
 @export_group("Textures")
 ## Heightmap texture sampled to create the terrain.
 @export var heightmap_texture : Texture2D :
@@ -220,6 +224,8 @@ func _get_cur_camera() -> Camera3D:
 		cur_camera = lod_camera_override
 	if not cur_camera or not is_instance_valid(cur_camera) or not cur_camera.is_inside_tree():
 		if Engine.is_editor_hint():
+			cur_camera = UTILS.get_editor_camera()
+	if Engine.is_editor_hint() and always_use_editor_cam:
 			cur_camera = UTILS.get_editor_camera()
 	return cur_camera
 
