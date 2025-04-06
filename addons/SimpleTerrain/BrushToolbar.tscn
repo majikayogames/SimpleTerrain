@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://dhg07358xefq0"]
 
-[ext_resource type="Script" uid="uid://btxuhbljroi7x" path="res://addons/SimpleTerrain/BrushToolbar.gd" id="1_sf5jv"]
+[ext_resource type="Script" uid="uid://chbol681no7qu" path="res://addons/SimpleTerrain/BrushToolbar.gd" id="1_sf5jv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxm1g"]
 border_color = Color(0, 0, 0, 1)

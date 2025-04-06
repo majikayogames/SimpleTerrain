@@ -41,9 +41,9 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 @export var debug_draw := false :
 	set(value): debug_draw = value; _update_meshes()
 	
-## Editor button to force update the mesh
-@export var force_update_mesh := false :
-	set(value): _update_meshes()
+## Toggle whether the normal map should be updated every frame.
+## Added this because normal map doesn't update when changing NoiseTexture2D parameters.
+@export var update_normal_map_every_frame_in_editor := true
 
 @export_group("Textures")
 ## Heightmap texture sampled to create the terrain.
@@ -120,6 +120,9 @@ var normal_map_baker = null
 
 # Only loaded in if debug draw is enabled
 var debug_shader = null
+
+# Box collision shape so SimpleTerrain node can be selected in editor
+var _editor_csg_box = null
 
 #######################
 ## Utility functions ##
@@ -235,7 +238,7 @@ func _get_camera_location_in_chunks() -> Vector3i:
 ##  Terrain update functions   ##
 #################################
 
-func update_normalmap_and_set_shader_parameter(force_generate := false) -> Texture2D:
+func update_normalmap_and_set_shader_parameter() -> Texture2D:
 	var heightmap_or_fallback := UTILS.get_image_texture_with_fallback(heightmap_texture, Color.BLACK)
 	var normal_or_generate = normalmap_texture
 	if normal_or_generate == null:
@@ -475,8 +478,18 @@ func _init():
 	add_child(chunks_container)
 
 func _ready():
+	if Engine.is_editor_hint():
+		_editor_csg_box = CSGBox3D.new()
+		_editor_csg_box.visibility_range_begin = INF
+		add_child(_editor_csg_box, false, Node.INTERNAL_MODE_BACK)
+		_editor_csg_box.owner = self
 	set_notify_transform(true)
 	_update_meshes()
 
 func _process(delta):
 	_update_lods()
+	if Engine.is_editor_hint():
+		if update_normal_map_every_frame_in_editor:
+			update_normalmap_and_set_shader_parameter()
+		if _editor_csg_box:
+			_editor_csg_box.size = Vector3(chunk_count.x * terrain_xz_scale, 1, chunk_count.y * terrain_xz_scale)
