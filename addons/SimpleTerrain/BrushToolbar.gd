@@ -181,7 +181,7 @@ func _on_create_collision_body_button_pressed():
 func _on_bake_normal_map_button_pressed():
 	var terrain := get_simple_terrain_selected()
 	if terrain == null: return
-	var texture := terrain.update_normalmap_and_set_shader_parameter(true)
+	var texture := terrain.update_normalmap_and_set_shader_parameter()
 	# Ensure the viewport texture the baker gives us is updated.
 	RenderingServer.frame_post_draw.connect((
 		func():
