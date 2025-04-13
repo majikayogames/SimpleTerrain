@@ -14,6 +14,7 @@ https://www.youtube.com/watch?v=AK951MB9kXM
 - Ability to paint holes in terrain
 - Collision map generation
 - Chunked LOD system for performant rendering
+- Foliage painting system with MultiMeshInstance3D
 
 ## Installation
 
