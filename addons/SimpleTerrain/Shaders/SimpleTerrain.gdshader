@@ -160,7 +160,9 @@ void fragment() {
 	//ALBEDO = vec3(tex_0_weight);
 	//ALBEDO = terrain_normal;
 	// Only make it a hole if the tri is fully transparent. This is so we have clearly defined holes.
-	ALPHA = step(0.0001, v_splat_color.a);
+	if (v_splat_color.a < 0.0001) {
+		discard;
+	}
 
 	NORMAL = (VIEW_MATRIX * (vec4(terrain_normal_world, 0.0))).xyz;
 }
