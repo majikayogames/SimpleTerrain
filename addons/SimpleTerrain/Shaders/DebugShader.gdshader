@@ -60,7 +60,7 @@ int get_lod(vec3 vert_pos_local) {
 	vec2 total_terrain_xz_size = terrain_xz_scale * vec2(chunk_count);
 	vec3 vert_pos_normalized = vert_pos_local / vec3(total_terrain_xz_size.x, 1., total_terrain_xz_size.y);
 	vec3 nudge_edge_verts = sign(vert_pos_local - cam_rel_pos) * NUDGE;
-	
+
 	ivec3 my_chunk_loc = ivec3(v_vert_pos_normalized * vec3(float(chunk_count.x), 1.0, float(chunk_count.y)) + nudge_edge_verts);
 	int diff = max(
 		max(
@@ -69,7 +69,7 @@ int get_lod(vec3 vert_pos_local) {
 		),
 		abs(my_chunk_loc.y - cam_chunk_loc.y)
 	);
-	
+
 	return max(
 		0, highest_lod_res - int(lod_dropoff_rate * float(diff))
 	);
@@ -81,9 +81,9 @@ void vertex() {
 	// Normalize vert between 0 (start of terrain) and 1 (end of terrain).
 	vec2 total_terrain_xz_size = terrain_xz_scale * vec2(chunk_count);
 	v_vert_pos_normalized = vert_relative_to_terrain / vec3(total_terrain_xz_size.x, 1., total_terrain_xz_size.y);
-	
+
 	int my_lod = get_lod(vert_relative_to_terrain);
-	
+
 	// When next to a lower LOD chunk, snap vert to nearest 2 subdivisions on lower LOD and interpolate.
 	// Will have no effect if not on a chunk edge. (When chunk LOD == nudged LOD).
 	float num_segments_per_chunk = pow(2.0, float(my_lod));
@@ -93,7 +93,7 @@ void vertex() {
 	vec2 snap_up = ceil(v_vert_pos_normalized.xz * num_segments_total - NUDGE) / num_segments_total;
 	vec2 snap_diff = (v_vert_pos_normalized.xz - snap_down) / subdiv_size_normal;
 	float interp_factor = max(snap_diff.x, snap_diff.y);
-	
+
 	// Get height at the 2 closest vertices on subdiv and interpolate.
 	// snap_up and snap_down will be equal if not stepping down an LOD.
 	float heightmap_val = mix(
@@ -104,7 +104,7 @@ void vertex() {
 	VERTEX.y = heightmap_val * terrain_height_scale;
 	v_vert_pos_local.y = heightmap_val * terrain_height_scale;
 	v_vert_pos_local.xz = (v_vert_pos_normalized.xz * vec2(chunk_count) * terrain_xz_scale);
-	
+
 	v_splat_color = sample_middle_of_pixel(splatmap, v_vert_pos_normalized.xz).rgba;
 }
 
@@ -121,7 +121,7 @@ void fragment() {
     tex_1_weight /= total_weight;
     tex_2_weight /= total_weight;
     tex_3_weight /= total_weight;
-	
+
 	vec3 normal0 = unpack_normal(texture(texture_0_normal, v_vert_pos_local.xz / texture_0_uv_scale));
 	vec3 normal1 = unpack_normal(texture(texture_1_normal, v_vert_pos_local.xz / texture_1_uv_scale));
 	vec3 normal2 = unpack_normal(texture(texture_2_normal, v_vert_pos_local.xz / texture_2_uv_scale));
@@ -135,14 +135,14 @@ void fragment() {
 
 	vec3 terrain_normal = unpack_normal(texture(normalmap, v_vert_pos_normalized.xz));
 	vec3 terrain_and_ground_normal = apply_normal_basis(ground_normal, terrain_normal);
-	
+
 	//if (terrain_normal.y < 0.0) {
 		//ALBEDO = vec3(1.0,0.0,0.0);
 	//}
-	
+
 	// Put in world space
 	vec3 terrain_normal_world = normalize(inv_normal_basis * terrain_and_ground_normal);
-	
+
     // Sample each of the four textures. Only doing triplanar on the first one.
 	vec3 tex_0_color = texture_triplanar_if_enabled(0, texture_0_albedo, v_vert_pos_local, terrain_normal, texture_0_uv_scale).rgb;
 	vec3 tex_1_color = texture_triplanar_if_enabled(1, texture_1_albedo, v_vert_pos_local, terrain_normal, texture_1_uv_scale).rgb;

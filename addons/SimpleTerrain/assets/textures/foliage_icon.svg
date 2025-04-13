@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333333 4.2333333"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="foliage_icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="23.233446"
+     inkscape:cx="8.0702623"
+     inkscape:cy="8.7158833"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" /><defs
+     id="defs1"><pattern
+       id="EMFhbasepattern"
+       patternUnits="userSpaceOnUse"
+       width="6"
+       height="6"
+       x="0"
+       y="0" /></defs><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"><path
+       id="path2"
+       style="fill:#f45c5d;fill-opacity:1;stroke:none;stroke-width:0.0384561;stroke-dasharray:none;stroke-opacity:1"
+       d="M 3.2500376,4.0600739 H 1.1169364 C 0.96416466,2.5776985 0.58243801,1.5939062 0.30949207,1.2586472 0.3131193,1.2562239 1.2266561,1.4933225 1.7140505,3.1961896 1.6703313,3.1918147 2.1309163,1.4880639 1.4153571,0.17332089 c 0.00216,-0.006499 0.9605384,0.49963154 1.1821776,3.01775401 0,0 0.3130382,-1.5721083 1.3263066,-2.49810053 C 3.511506,1.8494519 3.3847849,2.8603538 3.2500376,4.0600739 Z"
+       sodipodi:nodetypes="cccccccc" /></g></svg>

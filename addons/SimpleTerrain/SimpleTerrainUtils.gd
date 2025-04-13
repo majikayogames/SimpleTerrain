@@ -2,6 +2,7 @@ const HEIGHTMAP_FORMAT = Image.FORMAT_RF
 const SPLATMAP_FORMAT = Image.FORMAT_RGBA8
 
 enum BrushMode { RAISE, LOWER, FLATTEN, SPLAT_0, SPLAT_1, SPLAT_2, SPLAT_3, SPLAT_TRANSPARENT }
+enum FoliageBrushMode { ADD, ADD_STACKED, REMOVE }
 
 # Note: The web build was throwing an error for some reason if I didn't place EditorInterface
 # references in a separate file.
@@ -96,3 +97,12 @@ static func create_texture_if_necessary_before_paint(terrain : SimpleTerrain, un
 		or brush_mode == BrushMode.LOWER
 		or brush_mode == BrushMode.FLATTEN):
 			create_texture(terrain, true, undo_redo)
+
+static func get_point_y_on_plane(pt_on_plane : Vector2, a : Vector3, b : Vector3, c : Vector3) -> float:
+	# Get the normal of the plane using cross product of two vectors on the plane
+	var normal := (b - a).cross(c - a).normalized()
+	if abs(normal.y) <= 0.00001:
+		return a.y
+	var d := -normal.dot(a)
+	var y := -(normal.x * pt_on_plane.x + normal.z * pt_on_plane.y + d) / normal.y
+	return y

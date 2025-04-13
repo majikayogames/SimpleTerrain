@@ -1,0 +1,180 @@
+[gd_scene load_steps=6 format=3 uid="uid://8kj5d3wyim5t"]
+
+[ext_resource type="Script" uid="uid://ctuhbdxj16e1b" path="res://addons/SimpleTerrain/FoliageBrushToolbar.gd" id="1_omlq5"]
+[ext_resource type="Texture2D" uid="uid://detap6fgfpjec" path="res://addons/SimpleTerrain/assets/textures/foliage_icon.svg" id="2_0nnfe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxm1g"]
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_r08lb"]
+TextureRect/styles/asd = SubResource("StyleBoxFlat_nxm1g")
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_praku"]
+allow_unpress = true
+
+[node name="FoliageBrushToolbar" type="MarginContainer"]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_r08lb")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_omlq5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="BrushButtons" type="MarginContainer" parent="HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_constants/margin_right = 10
+
+[node name="BrushButtons" type="HBoxContainer" parent="HBoxContainer/HBoxContainer/BrushButtons"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/HBoxContainer/BrushButtons/BrushButtons"]
+layout_mode = 2
+texture = ExtResource("2_0nnfe")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/BrushButtons/BrushButtons"]
+layout_mode = 2
+text = "Foliage:"
+
+[node name="Add" type="Button" parent="HBoxContainer/HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Add foliage, painting over same spot multiple times does not stack foliage. Add a collision shape used for raycasts for more precise brush placement."
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "Add"
+
+[node name="AddStacked" type="Button" parent="HBoxContainer/HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Add foliage, painting over same spot multiple times stacks foliage. Add a collision shape used for raycasts for more precise brush placement."
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "Add Stacked"
+
+[node name="Remove" type="Button" parent="HBoxContainer/HBoxContainer/BrushButtons/BrushButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Remove foliage within brush radius. Add a collision shape used for raycasts for more precise brush placement."
+toggle_mode = true
+button_group = SubResource("ButtonGroup_praku")
+text = "Remove"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BrushSize" type="MarginContainer" parent="HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/HBoxContainer2/BrushSize"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer2/BrushSize/HBoxContainer"]
+layout_mode = 2
+text = "Size:"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/HBoxContainer2/BrushSize/HBoxContainer"]
+layout_mode = 2
+max_value = 512.0
+value = 64.0
+allow_greater = true
+suffix = "m"
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/HBoxContainer2/BrushSize/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 512.0
+value = 64.0
+allow_greater = true
+
+[node name="Density" type="MarginContainer" parent="HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Hardness of the brush edge"
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/HBoxContainer2/Density"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer2/Density/HBoxContainer"]
+layout_mode = 2
+text = "Density:"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/HBoxContainer2/Density/HBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10000.0
+value = 100.0
+rounded = true
+allow_greater = true
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/HBoxContainer2/Density/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 10000.0
+value = 100.0
+
+[node name="Randomness" type="MarginContainer" parent="HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Opacity or stength of the brush"
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/HBoxContainer2/Randomness"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer2/Randomness/HBoxContainer"]
+layout_mode = 2
+text = "Randomness:"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/HBoxContainer2/Randomness/HBoxContainer"]
+layout_mode = 2
+step = 0.05
+value = 100.0
+suffix = "%"
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/HBoxContainer2/Randomness/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+
+[node name="RecalculateY" type="Button" parent="HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Recalculate the Y positions of the foliage for if the terrain heightmap has changed"
+text = "Recalculate Y"
+
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer2/BrushSize/HBoxContainer/SpinBox" to="." method="set_brush_size_from_ui"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer2/BrushSize/HBoxContainer/SpinBox" to="HBoxContainer/HBoxContainer2/BrushSize/HBoxContainer/HSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer2/BrushSize/HBoxContainer/HSlider" to="HBoxContainer/HBoxContainer2/BrushSize/HBoxContainer/SpinBox" method="set_value"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer2/Density/HBoxContainer/SpinBox" to="." method="set_brush_density_from_ui"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer2/Density/HBoxContainer/SpinBox" to="HBoxContainer/HBoxContainer2/Density/HBoxContainer/HSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer2/Density/HBoxContainer/HSlider" to="HBoxContainer/HBoxContainer2/Density/HBoxContainer/SpinBox" method="set_value"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer2/Randomness/HBoxContainer/SpinBox" to="." method="set_brush_randomness_from_ui"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer2/Randomness/HBoxContainer/SpinBox" to="HBoxContainer/HBoxContainer2/Randomness/HBoxContainer/HSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer2/Randomness/HBoxContainer/HSlider" to="HBoxContainer/HBoxContainer2/Randomness/HBoxContainer/SpinBox" method="set_value"]
+[connection signal="pressed" from="HBoxContainer/HBoxContainer2/RecalculateY" to="." method="_on_recalculate_y_pressed"]

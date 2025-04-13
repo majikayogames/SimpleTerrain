@@ -26,7 +26,10 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 	set(value): terrain_xz_scale = value; _update_meshes()
 ## The y positions of the terrain vertices will be between 0 and terrain_height_scale
 ## as long as it's a standard luminosity based heightmap.
-@export var terrain_height_scale : float = 20.0 :
+## Note: Careful of setting this too high. The imprecisions of the heightmap texture will become obvious.
+## Especially if using NoiseTexture2D, which only has 256 possible height values, the terrain will look blocky.
+## It's better to set this to 1 and use the float format which is 32 bit, and has 16.7 million possible height values.
+@export var terrain_height_scale : float = 1.0 :
 	set(value): terrain_height_scale = value; _update_meshes()
 ## Number of chunks in the X and Z directions.
 @export var chunk_count := Vector2i(16,16) :
@@ -34,6 +37,14 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 ## Number of LOD steps down per chunk away from camera. Can be fractional.
 @export_range(0.0, 10.0) var lod_dropoff_rate : float = 0.25 :
 	set(value): lod_dropoff_rate = value; _update_meshes()
+	
+@export_flags_3d_render var visual_instance_3d_layers: int = 1 :
+	set(value):
+		visual_instance_3d_layers = value;
+		if is_inside_tree() and chunks_container:
+			for chunk in chunks_container.get_children(true):
+				if chunk is MeshInstance3D:
+					chunk.layers = visual_instance_3d_layers
 
 @export var lod_camera_override : Camera3D = null
 
@@ -51,6 +62,8 @@ const UTILS = preload("res://addons/SimpleTerrain/SimpleTerrainUtils.gd")
 
 @export_group("Textures")
 ## Heightmap texture sampled to create the terrain.
+## Note: The size dimensions of this texture should match the number of vertices.
+## The proper size can be found by clearing the heightmap, and using the default size in the terrain settings popup menu.
 @export var heightmap_texture : Texture2D :
 	set(value): heightmap_texture = value; _update_meshes()
 @export var splatmap_texture : Texture2D :
@@ -140,7 +153,7 @@ func blit_to_texture(terrain : SimpleTerrain, texture : Texture2D, image : Image
 
 ## Raycasts via pixel checks. Returns the global position of the ray hit if there is one.
 ## Returns in the format [global pos : Vector3, splatmap : Color] or [null, null] if it doesn't hit.
-func raycast_terrain_by_px(ray_start_global_position : Vector3, target_position_relative : Vector3) -> Array:
+func raycast_terrain_by_px(ray_start_global_position : Vector3, target_position_relative : Vector3, snap_to_px := true) -> Array:
 	var start_pos = get_global_pos_normalized_to_terrain(ray_start_global_position)
 	var end_pos = get_global_pos_normalized_to_terrain(ray_start_global_position + target_position_relative)
 	# Put in pixel space
@@ -179,13 +192,6 @@ func get_terrain_pixel(tex : Texture2D, x : int, y : int, fallback_color := Colo
 	if (x < 0 or y < 0 or x >= _get_texture_size(tex).x or y >= _get_texture_size(tex).y):
 		return fallback_color
 	return tex.get_image().get_pixel(x, y)
-
-func get_terrain_pixel_by_global_pos(tex: Texture2D, global_pos : Vector3, fallback_color := Color.TRANSPARENT) -> Color:
-	if tex == null or tex.get_image() == null:
-		return fallback_color
-	var normalized := get_global_pos_normalized_to_terrain(global_pos)
-	var px := Vector2(normalized.x, normalized.y) * Vector2(tex.get_image().get_size())
-	return get_terrain_pixel(tex, px.x, px.y)
 	
 func _get_texture_size(tex : Texture2D) -> Vector2i:
 	if tex == null or tex.get_image() == null:
@@ -337,6 +343,7 @@ func _create_chunks():
 		chunks[x] = col
 		for z in chunk_count.y:
 			var mesh_instance = MeshInstance3D.new()
+			mesh_instance.layers = visual_instance_3d_layers
 			mesh_instance.mesh = lod_meshes.back()
 			mesh_instance.position = Vector3(x,0,z) * terrain_xz_scale
 			mesh_instance.scale = Vector3(terrain_xz_scale, 1, terrain_xz_scale)
@@ -466,11 +473,52 @@ func _update_meshes():
 	update_shader_params()
 	_update_lods()
 	# Create a collision shape at runtime if there isn't already one
-	if not Engine.is_editor_hint() and get_node_or_null("StaticBody3D") == null and use_collision:
+	if not Engine.is_editor_hint() and get_collision_body() == null and use_collision:
 		if heightmap_texture is NoiseTexture2D:
 			create_collision_shape.call_deferred()
 		else:
 			create_collision_shape()
+
+func get_collision_body() -> StaticBody3D:
+	for child in get_children():
+		if child is StaticBody3D and child.get_child(0) is CollisionShape3D and child.get_child(0).shape is HeightMapShape3D:
+			return child
+	return null
+
+# For a given LOD, get the triangle the given point is within. Returns Vector3 for 3 triangle verts in clockwise order
+func get_tri_at_xz(global_pos : Vector3, lod : int, local_to_chunks_container := false) -> Array:
+	var local_pos := chunks_container.global_transform.affine_inverse() * global_pos
+	var num_quads_along_edge_total := _get_num_verts_along_edge_total(lod) - Vector2i(1, 1)
+	var quad_size := get_total_size_without_height() / Vector2(num_quads_along_edge_total)
+	var quad_idx := Vector2i((Vector2(local_pos.x, local_pos.z) / quad_size).floor())
+	var quad_local_pos_normalized := Vector2(local_pos.x, local_pos.z) - Vector2(quad_idx) * quad_size
+	var in_top_left_tri := quad_local_pos_normalized.y > quad_local_pos_normalized.x
+	var verts := []
+	if in_top_left_tri:
+		verts = [quad_idx, quad_idx + Vector2i(1,0), quad_idx + Vector2i(0,1)]
+	else: # in bottom right tri
+		verts = [quad_idx + Vector2i(1,0), quad_idx + Vector2i(1,1), quad_idx + Vector2i(0,1)]
+	
+	var heightmap_image = UTILS.get_image_texture_with_fallback(heightmap_texture, Color.BLACK).get_image()
+	var iw = heightmap_image.get_width()
+	var ih = heightmap_image.get_height()
+	for i in len(verts):
+		var v = verts[i]
+		var hpixel_x := int((float(v.x) / float(_get_num_verts_along_edge_total(lod).x - 1)) * float(heightmap_image.get_width() - 1))
+		var hpixel_y := int((float(v.y) / float(_get_num_verts_along_edge_total(lod).y - 1)) * float(heightmap_image.get_height() - 1))
+		hpixel_x = clamp(hpixel_x, 0, iw-1)
+		hpixel_y = clamp(hpixel_y, 0, ih-1)
+		var h = heightmap_image.get_pixel(hpixel_x, hpixel_y).r * terrain_height_scale
+		var pos := Vector3(v.x * quad_size.x, h, v.y * quad_size.y)
+		if not local_to_chunks_container:
+			pos = chunks_container.global_transform * pos
+		verts[i] = pos
+	return verts
+
+func get_real_local_height_at_pos(global_pos : Vector3, lod : int) -> float:
+	var tri := get_tri_at_xz(global_pos, lod, true)
+	var local_pos := chunks_container.global_transform.affine_inverse() * global_pos
+	return UTILS.get_point_y_on_plane(Vector2(local_pos.x, local_pos.z), tri[0], tri[1], tri[2])
 
 ######################
 ## Built in methods ##
