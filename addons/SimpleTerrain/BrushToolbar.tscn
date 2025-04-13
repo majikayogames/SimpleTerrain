@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dhg07358xefq0"]
+[gd_scene load_steps=14 format=3 uid="uid://dhg07358xefq0"]
 
 [ext_resource type="Script" uid="uid://chbol681no7qu" path="res://addons/SimpleTerrain/BrushToolbar.gd" id="1_sf5jv"]
+[ext_resource type="Texture2D" uid="uid://dri5wcef3up8o" path="res://addons/SimpleTerrain/assets/textures/terrain_icon.svg" id="2_8iqfe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxm1g"]
 border_color = Color(0, 0, 0, 1)
@@ -85,6 +86,11 @@ theme_override_constants/margin_right = 10
 
 [node name="BrushButtons" type="HBoxContainer" parent="HFlowContainer/HBoxContainer/BrushButtons"]
 layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
+layout_mode = 2
+texture = ExtResource("2_8iqfe")
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 layout_mode = 2

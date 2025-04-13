@@ -107,7 +107,7 @@ func _scale_decal_to_texture_size():
 	var active_canvas_size := active_canvas.get_image().get_size() if active_canvas else Vector2i(1024,1024)
 	var rel_size := Vector2(paint_texture.get_image().get_size()) / Vector2(active_canvas_size)
 	var size_in_world_units = rel_size * terrain.get_total_size_without_height()
-	self.size = Vector3(size_in_world_units.x, terrain.terrain_height_scale * 1.5, size_in_world_units.y)
+	self.size = Vector3(size_in_world_units.x, 50, size_in_world_units.y)
 
 func blit_with_alpha_blending(from : Image, to : Image, pos : Vector2i, clamp : Color) -> void:
 	var diff := Image.create(from.get_width(), from.get_height(), false, to.get_format())
