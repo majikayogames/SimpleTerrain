@@ -33,7 +33,7 @@ void fragment() {
 	vec3 x_basis_bottri = vec3(quad_size, bottom_right - bottom_left, 0.);
 	vec3 z_basis_bottri = vec3(0., bottom_right - top_right, -quad_size);
 	vec3 y_basis_bottri = cross(x_basis_bottri, z_basis_bottri);
-	
+
 	vec3 n = normalize((y_basis_toptri + y_basis_bottri) / 2.);
 	vec3 packed = pack_normal(n).xyz;
 	COLOR = vec4(packed, 1.0);

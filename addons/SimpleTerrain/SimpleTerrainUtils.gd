@@ -48,7 +48,14 @@ static func get_image_texture_with_fallback(texture : Texture2D, fallback_color 
 static func is_texture_ready_for_edit(texture : Texture2D) -> bool:
 	if texture == null or not texture is ImageTexture:
 		return false
-	## TODO implement. Make sure texture is an image texture resource local to scene/saved
+	
+	# Check if texture is saved as an external resource file
+	var resource_path = texture.resource_path
+	if resource_path.ends_with(".tres") and not resource_path.ends_with(".res"):
+		# This is an external .tres file, force conversion to avoid editing external files
+		return false
+	
+	# If it has no resource path or is embedded in the scene, it's safe to edit
 	return true
 
 static func get_default_texture_size_for_terain(terrain : SimpleTerrain) -> Vector2i:

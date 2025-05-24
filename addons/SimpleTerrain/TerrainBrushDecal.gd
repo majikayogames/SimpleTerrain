@@ -26,6 +26,7 @@ var paint_texture := GradientTexture2D.new()
 
 @export var follow_mouse := false
 @export var painting := false
+@export var shift_pressed := false
 
 @export_range(0,1) var opacity := 1.0 :
 	set(value):
@@ -79,7 +80,10 @@ func _update_textures():
 func _get_draw_color() -> Color:
 	var color := Color.WHITE
 	if brush_mode == BrushMode.FLATTEN:
-		if terrain.heightmap_texture:
+		if shift_pressed:
+			# Flatten to absolute 0 when shift is pressed
+			color = Color.BLACK
+		elif terrain.heightmap_texture:
 			var pos := _get_pos_on_texture(terrain.heightmap_texture)
 			terrain.heightmap_texture.get_image().decompress()
 			color = terrain.get_terrain_pixel(terrain.heightmap_texture, pos.x, pos.y)

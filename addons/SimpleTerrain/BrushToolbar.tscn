@@ -37,7 +37,7 @@ border_color = Color(0, 0, 0, 1)
 [sub_resource type="Gradient" id="Gradient_vw1bq"]
 interpolation_mode = 2
 interpolation_color_space = 1
-offsets = PackedFloat32Array(0, 0.749925, 1)
+offsets = PackedFloat32Array(0, 0, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_csyql"]
@@ -115,7 +115,7 @@ text = "Lower"
 [node name="Flatten" type="Button" parent="HFlowContainer/HBoxContainer/BrushButtons/BrushButtons"]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Flatten terrain using elevation under the brush as the base"
+tooltip_text = "Flatten terrain using elevation under the brush as the base. Hold Shift to flatten to absolute 0."
 toggle_mode = true
 button_group = SubResource("ButtonGroup_praku")
 text = "Flatten"
@@ -279,7 +279,7 @@ text = "Terrain settings"
 unique_name_in_owner = true
 title = "Terrain texture settings"
 initial_position = 2
-size = Vector2i(640, 575)
+size = Vector2i(640, 627)
 unresizable = false
 borderless = false
 keep_title_visible = true
@@ -288,7 +288,7 @@ keep_title_visible = true
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 636.0
-offset_bottom = 592.0
+offset_bottom = 623.0
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30

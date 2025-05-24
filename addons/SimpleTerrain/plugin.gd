@@ -134,10 +134,14 @@ func _handles(object):
 
 func _forward_3d_gui_input(camera, event):
 	var left_mouse_pressed = false
+	var shift_pressed = false
+	
 	if event is InputEventMouse:
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				_left_mouse_pressed = event.pressed
+		# Check for shift key state
+		shift_pressed = event.shift_pressed
 				
 	var terrain = get_simple_terrain_selected()
 	var foliage = get_simple_terrain_foliage_selected()
@@ -149,6 +153,8 @@ func _forward_3d_gui_input(camera, event):
 		update_brush_node()
 		if event is InputEventMouseMotion:
 			terrain_brush._raycast_and_snap_to_terrain(camera, Vector2(event.position))
+		# Pass shift state to terrain brush
+		terrain_brush.shift_pressed = shift_pressed
 	else:
 		remove_brush_node_from_tree()
 	

@@ -529,11 +529,28 @@ func _notification(what):
 		update_shader_params()
 
 func _init():
+	chunks_container.name = "ST_ChunksContainer"
 	add_child(chunks_container)
 
 func _ready():
+	# Clean up any duplicate chunks containers from node duplication
+	var existing_chunks = get_node_or_null("ST_ChunksContainer")
+	if existing_chunks and existing_chunks != chunks_container:
+		remove_child(existing_chunks)
+		existing_chunks.queue_free()
+	elif existing_chunks:
+		chunks_container = existing_chunks
+
 	if Engine.is_editor_hint():
+		# Clean up any duplicate CSG boxes from node duplication
+		var existing_csg = get_node_or_null("ST_EditorCSGBox")
+		if existing_csg:
+			remove_child(existing_csg)
+			existing_csg.queue_free()
+		
+		# Create a new one
 		_editor_csg_box = CSGBox3D.new()
+		_editor_csg_box.name = "ST_EditorCSGBox"
 		_editor_csg_box.visibility_range_begin = INF
 		add_child(_editor_csg_box, false, Node.INTERNAL_MODE_BACK)
 		_editor_csg_box.owner = self

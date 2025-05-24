@@ -45,7 +45,7 @@ func show_convert_texture_popup(brush_mode):
 		or brush_mode == UTILS.BrushMode.LOWER
 		or brush_mode == UTILS.BrushMode.FLATTEN):
 		texture_name = "Heightmap"
-	%ConvertTextureConfirmationDialog.dialog_text = texture_name + " must duplicated and converted to an ImageTexture resource before editing."
+	%ConvertTextureConfirmationDialog.dialog_text = texture_name + " must be duplicated and converted to an ImageTexture resource embedded in the scene before editing."
 	%ConvertTextureConfirmationDialog.show()
 
 func get_simple_terrain_selected() -> SimpleTerrain:
