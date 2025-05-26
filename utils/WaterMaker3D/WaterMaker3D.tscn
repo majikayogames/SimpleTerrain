@@ -1,9 +1,9 @@
 [gd_scene load_steps=14 format=3 uid="uid://ca0wevg1lb4rx"]
 
-[ext_resource type="Script" path="res://utils/WaterMaker3D/WaterMaker3D.gd" id="1_7s6ww"]
-[ext_resource type="Shader" path="res://utils/WaterMaker3D/FogFade.gdshader" id="2_5f01f"]
-[ext_resource type="Shader" path="res://utils/WaterMaker3D/CameraWaterOverlay.gdshader" id="2_12cox"]
-[ext_resource type="Script" path="res://utils/WaterMaker3D/FogVolumeFadeScript.gd" id="3_b5ytn"]
+[ext_resource type="Script" uid="uid://w5j0ammn5vgr" path="res://utils/WaterMaker3D/WaterMaker3D.gd" id="1_7s6ww"]
+[ext_resource type="Shader" uid="uid://deenbjd7uq6uh" path="res://utils/WaterMaker3D/FogFade.gdshader" id="2_5f01f"]
+[ext_resource type="Shader" uid="uid://cbxrjq6roswbt" path="res://utils/WaterMaker3D/CameraWaterOverlay.gdshader" id="2_12cox"]
+[ext_resource type="Script" uid="uid://ch08n51eeissu" path="res://utils/WaterMaker3D/FogVolumeFadeScript.gd" id="3_b5ytn"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1bimf"]
 resource_local_to_scene = true
