@@ -4,6 +4,9 @@ const SPLATMAP_FORMAT = Image.FORMAT_RGBA8
 enum BrushMode { RAISE, LOWER, FLATTEN, SPLAT_0, SPLAT_1, SPLAT_2, SPLAT_3, SPLAT_TRANSPARENT }
 enum FoliageBrushMode { ADD, ADD_STACKED, REMOVE }
 
+# Cache for fallback textures to avoid memory leaks
+static var _fallback_texture_cache = {}
+
 # Note: The web build was throwing an error for some reason if I didn't place EditorInterface
 # references in a separate file.
 static func get_editor_camera():
@@ -39,9 +42,16 @@ static func get_image_texture_with_fallback(texture : Texture2D, fallback_color 
 		return texture
 	var img = texture.get_image() if texture else null
 	if not img:
-		var black_1x1 := Image.create(1,1,false,Image.FORMAT_RGBA8)
-		black_1x1.fill(fallback_color)
-		return ImageTexture.create_from_image(black_1x1)
+		# Use cached fallback texture to avoid creating new ones repeatedly
+		var color_key = str(fallback_color)
+		# Ensure cache is initialized before use to avoid calling methods on null
+		if _fallback_texture_cache == null:
+			_fallback_texture_cache = {}
+		if not _fallback_texture_cache.has(color_key):
+			var black_1x1 := Image.create(1,1,false,Image.FORMAT_RGBA8)
+			black_1x1.fill(fallback_color)
+			_fallback_texture_cache[color_key] = ImageTexture.create_from_image(black_1x1)
+		return _fallback_texture_cache[color_key]
 	else:
 		return texture
 
@@ -90,6 +100,10 @@ static func create_texture(terrain : SimpleTerrain, heightmap : bool, undo_redo,
 		undo_redo.add_undo_property(terrain, "splatmap_texture", terrain.splatmap_texture)
 		undo_redo.add_do_property(terrain, "splatmap_texture", new_tex)
 	undo_redo.commit_action()
+
+# Clear the fallback texture cache (should be called on plugin exit)
+static func clear_fallback_texture_cache():
+	_fallback_texture_cache.clear()
 
 static func create_texture_if_necessary_before_paint(terrain : SimpleTerrain, undo_redo, brush_mode : BrushMode):
 	if terrain.splatmap_texture == null and (

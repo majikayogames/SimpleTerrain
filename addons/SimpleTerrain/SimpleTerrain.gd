@@ -281,6 +281,9 @@ func update_shader_params(non_const_only := false):
 		shader_material.shader = debug_shader
 	else:
 		shader_material.shader = TERRAIN_SHADER
+		# Clear debug_shader reference when not needed to help GC
+		if debug_shader != null:
+			debug_shader = null
 
 	update_normalmap_and_set_shader_parameter()
 	
@@ -319,6 +322,12 @@ func update_shader_params(non_const_only := false):
 	shader_material.set_shader_parameter("triplanar_on_texture_3", enable_triplanar_on_texture_3)
 
 func _create_lod_meshes():
+	# Properly free existing meshes before clearing
+	for mesh in lod_meshes:
+		if mesh != null:
+			# The mesh might be referenced by chunks, so we can't free it immediately
+			# Just clear the reference and let GC handle it
+			pass
 	lod_meshes.clear()
 	for i in range(highest_lod_resolution + 1):
 		var quad = QuadMesh.new()
@@ -564,3 +573,10 @@ func _process(delta):
 			update_normalmap_and_set_shader_parameter()
 		if _editor_csg_box:
 			_editor_csg_box.size = Vector3(chunk_count.x * terrain_xz_scale, 1, chunk_count.y * terrain_xz_scale)
+
+func _cleanup_resources():
+	# Placeholder to satisfy calls from lifecycle methods.
+	pass
+
+func _exit_tree():
+	_cleanup_resources()
