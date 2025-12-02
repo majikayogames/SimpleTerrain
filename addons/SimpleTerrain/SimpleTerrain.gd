@@ -572,7 +572,16 @@ func _process(delta):
 		if update_normal_map_every_frame_in_editor:
 			update_normalmap_and_set_shader_parameter()
 		if _editor_csg_box:
+			# Match the selection box to the terrain extents, respecting centered/corner modes
 			_editor_csg_box.size = Vector3(chunk_count.x * terrain_xz_scale, 1, chunk_count.y * terrain_xz_scale)
+			if centered:
+				_editor_csg_box.position = Vector3.ZERO
+			else:
+				_editor_csg_box.position = Vector3(
+					chunk_count.x * terrain_xz_scale * 0.5,
+					0.0,
+					chunk_count.y * terrain_xz_scale * 0.5
+				)
 
 func _cleanup_resources():
 	# Placeholder to satisfy calls from lifecycle methods.
