@@ -9,12 +9,16 @@ static var _fallback_texture_cache = {}
 
 # Note: The web build was throwing an error for some reason if I didn't place EditorInterface
 # references in a separate file.
+static var _editor_camera_script_instance = null
+
 static func get_editor_camera():
 	# Running this directly crashes at runtime on web export so here's a workaround
-	var script := GDScript.new()
-	script.set_source_code("func eval(): return EditorInterface.get_editor_viewport_3d().get_camera_3d()" )
-	script.reload()
-	return script.new().eval()
+	if _editor_camera_script_instance == null:
+		var script := GDScript.new()
+		script.set_source_code("func eval(): return EditorInterface.get_editor_viewport_3d().get_camera_3d()")
+		script.reload()
+		_editor_camera_script_instance = script.new()
+	return _editor_camera_script_instance.eval()
 
 static func bresenham_line_connect(a : Vector2i, b : Vector2i) -> Array[Vector2i]:
 	var d := Vector2i(abs(b.x - a.x), -abs(b.y - a.y))
